@@ -3,10 +3,11 @@ import { Elysia } from "elysia"
 import { tlsConfig } from "./config/tls.config"
 import { exampleController } from "./controllers/example.controller"
 import cors from "@elysiajs/cors"
-import { Database } from "./config/database.config"
+import { MongoDB } from "./config/database.config"
 
 
-Database.connect()
+
+MongoDB.connect()
 
 const app = new Elysia()
   .use(cors())
