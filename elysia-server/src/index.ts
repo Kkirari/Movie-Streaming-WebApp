@@ -1,7 +1,7 @@
 import staticPlugin from "@elysiajs/static"
 import { Elysia } from "elysia"
 import { tlsConfig } from "./config/tls.config"
-import { exampleController } from "./controllers/example.controller"
+import { AccountController } from "./controllers/account.controller"
 import cors from "@elysiajs/cors"
 import { MongoDB } from "./config/database.config"
 
@@ -11,7 +11,7 @@ MongoDB.connect()
 
 const app = new Elysia()
   .use(cors())
-  .use(exampleController)
+  .use(AccountController)
   .use(staticPlugin({
     assets: 'public/client',
     prefix: ''
