@@ -25,6 +25,6 @@ export const MoviePostSchema = t.Object({
     genre_ids: t.Array(t.Numeric()),
 })
 
-// ✅ Types
+
 export type Movie = typeof MovieSchema.static
 export type MoviePost = typeof MoviePostSchema.static
