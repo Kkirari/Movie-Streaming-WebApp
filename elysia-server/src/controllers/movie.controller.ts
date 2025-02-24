@@ -1,23 +1,38 @@
 import { Elysia } from "elysia"
-import { MovieSchema, MoviePostSchema, Movie, MoviePost } from "../types/movie.type"
+import { MovieSchema, MoviePostSchema, Movie, MoviePostData, MovieDto } from "../types/movie.type"
+import { MovieService } from "../service/movie.service";
+import { AuthMiddleWare } from "../middlewares/auth.middleware";
 
-const movies: Movie[] = []
-
-export const MovieController = new Elysia({ prefix: "/api/movies" })
+export const MovieController = new Elysia({
+    prefix: "/api/movies",
+    tags: ["movies"]
+})
+    .use(AuthMiddleWare)
+    .use(MovieDto)
 
     .post(
-        "/movie",
-        ({ body }: { body: MoviePost }) => {
-            const newMovie: Movie = {
-                id: movies.length + 1,
-                ...body
+        "/upload-movie",
+        async ({ body, set }) => {
+            try {
+                const newMovie = await MovieService.createNewMovie(body);
+                return newMovie;
+            } catch (error) {
+                set.status = 400;
+                throw new Error(error instanceof Error ? error.message : "Failed to create movie");
             }
-
-            movies.push(newMovie)
-            return newMovie
         },
         {
             body: MoviePostSchema,
             response: MovieSchema,
+            detail: { summary: "Create a new movie" }
         }
     )
+
+    .get('/', async ({ query }) => {
+        const pagination = await MovieService.get(query)
+        return pagination
+    }, {
+        detail: { summary: "Get Followers" },
+        query: "pagination",
+        Response: "movies",
+    })
