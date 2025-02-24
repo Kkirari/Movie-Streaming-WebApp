@@ -35,7 +35,7 @@ li a {
 }
 
 ul li a:hover {
-    background: #fff;
+    background: #0004ff;
     color: black;
     padding: 5px;
 
@@ -63,7 +63,7 @@ img {
 .main_container {
     height: 100vh;
     color: #fff;
-    background: url('https://img.freepik.com/free-photo/monochromatic-urban-minimal-landscape_23-2151011613.jpg?t=st=1715336930~exp=1715340530~hmac=8bcb179cd0db052156855983e1484bdc421450a7e121d76ae49593804e214528&w=996') no-repeat;
+    background: url(./bgmain.jpeg) no-repeat;
     background-size: cover;
     /* Adjust background size */
     display: flex;
