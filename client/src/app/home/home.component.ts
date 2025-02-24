@@ -6,7 +6,7 @@ import { AccountService } from '../_services/account.service'
   selector: 'app-home',
   imports: [],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.scss'
 })
 export class HomeComponent {
   private accountService = inject(AccountService)
