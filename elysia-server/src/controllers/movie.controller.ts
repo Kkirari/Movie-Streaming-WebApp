@@ -1,4 +1,4 @@
-import { Elysia } from "elysia"
+import { Elysia, t } from "elysia"
 import { MovieSchema, MoviePostSchema, Movie, MoviePostData, MovieDto } from "../types/movie.type"
 import { MovieService } from "../service/movie.service";
 import { AuthMiddleWare } from "../middlewares/auth.middleware";
@@ -28,11 +28,9 @@ export const MovieController = new Elysia({
         }
     )
 
-    .get('/', async ({ query }) => {
-        const pagination = await MovieService.get(query)
-        return pagination
+    .get('/get', async () => {
+        return await MovieService.get();
     }, {
-        detail: { summary: "Get Followers" },
-        query: "pagination",
-        Response: "movies",
+        detail: { summary: "Get all movies" },
+        response: t.Array(MovieSchema)
     })

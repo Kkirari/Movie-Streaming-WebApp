@@ -13,33 +13,38 @@ export const MovieService = {
         const newUser = await movie.createMovie(newMovieData)
         return newUser.toMovie()
     },
-    get: async function (pagination: moviePagination): Promise<moviePaginator> {
-        console.log("Received query:", pagination)  // Debug query ที่เข้ามา
+    // get: async function (pagination: moviePagination): Promise<moviePaginator> {
+    //     console.log("Received query:", pagination)  // Debug query ที่เข้ามา
 
-        let filter: RootFilterQuery<IMovieDocument> = {
-            $and: QueryHelper.parseUserQuery(pagination)
-        }
+    //     let filter: RootFilterQuery<IMovieDocument> = {
+    //         $and: QueryHelper.parseUserQuery(pagination)
+    //     }
 
-        const query = movie.find(filter).sort({ last_active: -1 })
-        const skip = pagination.pageSize * (pagination.currentPage - 1)
-        query.skip(skip).limit(pagination.pageSize)
+    //     const query = movie.find(filter).sort({ last_active: -1 })
+    //     const skip = pagination.pageSize * (pagination.currentPage - 1)
+    //     query.skip(skip).limit(pagination.pageSize)
 
-        const [docs, total] = await Promise.all([
-            query.exec(),
-            movie.countDocuments(filter).exec()
-        ])
+    //     const [docs, total] = await Promise.all([
+    //         query.exec(),
+    //         movie.countDocuments(filter).exec()
+    //     ])
 
-        pagination.length = total
-        console.log("Final pagination:", pagination)  // Debug pagination ก่อน return
+    //     pagination.length = total
+    //     console.log("Final pagination:", pagination)  // Debug pagination ก่อน return
 
-        return {
-            pagination: pagination,
-            items: docs.map(doc => doc.toMovie())
-        }
+    //     return {
+    //         pagination: pagination,
+    //         items: docs.map(doc => doc.toMovie())
+    //     }
+    // },
+
+    get: async function (): Promise<Movie[]> {
+        const docs = await movie.find().exec();
+        return docs.map(doc => doc.toMovie());
     },
 
 
-    getByUsername: async function (username: string): Promise<Movie> {
+    getByTitle: async function (username: string): Promise<Movie> {
         const user = await movie.findOne({ username }).exec()
         if (user)
             return user.toMovie()
