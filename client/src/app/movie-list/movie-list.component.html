@@ -1,0 +1,12 @@
+<div class="movie-section">
+    <h2 class="section-title">Movie-list</h2>
+    <div class="movie-row">
+        <div class="movie-card" *ngFor="let movie of movies">
+            <img *ngIf="movie.poster_path" [src]="movie.poster_path" class="movie-img" alt="{{ movie.title }}">
+            <div class="movie-overlay">
+                <h3 class="movie-title">{{ movie.title }}</h3>
+                <p class="movie-year">📅 {{ movie.release_date }}</p>
+            </div>
+        </div>
+    </div>
+</div>

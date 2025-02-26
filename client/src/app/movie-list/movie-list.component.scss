@@ -1,0 +1,64 @@
+.movie-section {
+    margin: 20px;
+}
+
+.section-title {
+    color: white;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.movie-row {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 10px;
+    padding-bottom: 10px;
+}
+
+.movie-card {
+    flex: 0 0 auto;
+    width: 250px;
+    scroll-snap-align: start;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+
+    margin-top: 100px;
+    margin-left: 20px;
+}
+
+.movie-card:hover {
+    transform: scale(1.1);
+}
+
+.movie-img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.movie-overlay {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.651);
+    width: 92%;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.movie-card:hover .movie-overlay {
+    opacity: 1;
+}
+
+.movie-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+.movie-year {
+    font-size: 14px;
+    color: rgb(255, 0, 0);
+}
