@@ -144,9 +144,9 @@ p {
 .genre-container {
     display: flex;
     overflow-x: auto;
-    /* ทำให้เลื่อนแนวนอนได้ */
+
     scroll-snap-type: x mandatory;
-    /* ทำให้เลื่อนเป็นสเต็ป */
+
     gap: 20px;
     padding: 10px;
     align-items: center;
@@ -156,7 +156,7 @@ p {
 .genre-item {
     flex: 0 0 auto;
     scroll-snap-align: center;
-    /* ให้แต่ละอันหยุดตรงกลาง */
+
     font-size: 1.5rem;
     color: gray;
     cursor: pointer;
@@ -166,7 +166,7 @@ p {
 
 .genre-item.active {
     color: white;
-    /* ทำให้หมวดหมู่ที่เลือกอยู่เด่นขึ้น */
+
     font-weight: bold;
 }
 
@@ -194,7 +194,7 @@ input {
     color: #000000;
     background: url(./bgmain.jpeg) no-repeat;
     background-size: cover;
-    /* Adjust background size */
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -211,7 +211,7 @@ input {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    /* ลดช่องว่างระหว่างโลโก้กับข้อความ */
+
 
 
     text-align: center;
@@ -330,7 +330,7 @@ button {
 @keyframes fadeInUp {
     0% {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
     }
 
     100% {
