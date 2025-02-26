@@ -1,12 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 
 
+.logo1 {
+
+
+    max-width: 70%;
+    /* ป้องกันไม่ให้ใหญ่เกิน */
+    // height: auto;
+    /* ให้ขนาดปรับตามสัดส่วน */
+    object-fit: contain;
+    /* ป้องกันการถูกตัด */
+    margin-bottom: 0px;
+
+
+
+}
 
 h1 {
     position: absolute;
     top: 140%;
     text-size-adjust: 100%;
 }
+
+
+
 
 body {
     min-height: 100vh;
@@ -20,6 +37,11 @@ body {
     overflow-x: hidden;
     /* ป้องกันการเลื่อนแนวนอน */
     width: 100vw;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
 }
 
 .slider {
@@ -79,7 +101,7 @@ img:hover {
 
 .slider ::before,
 .slider::after {
-    background-color: linear-gradient(to right, rgb(255, 255, 255)0%, rgba(0, 0, 0, 0));
+    background-color: linear-gradient(to right, rgb(0, 0, 0)0%, rgba(0, 0, 0, 0));
     content: "";
     height: 100%;
     position: absolute;
@@ -98,6 +120,18 @@ img:hover {
     transform: rotateZ(180deg);
 }
 
+p {
+    font-size: 20px;
+    font-weight: bold;
+
+    color: white;
+}
+
+.welcome {
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(0, 38, 255);
+}
 
 
 
@@ -157,7 +191,7 @@ input {
 
 .main_container {
     height: 100vh;
-    color: #ffffff;
+    color: #000000;
     background: url(./bgmain.jpeg) no-repeat;
     background-size: cover;
     /* Adjust background size */
@@ -165,11 +199,25 @@ input {
     align-items: center;
     justify-content: center;
     max-width: 100vw;
+    overflow-x: hidden;
+
+
 
 }
 
 .content {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    /* ลดช่องว่างระหว่างโลโก้กับข้อความ */
+
+
     text-align: center;
+
+
+
 }
 
 .info {
@@ -191,12 +239,12 @@ h1 {
 }
 
 button {
-    background-color: #001aff;
+    background-color: #303030;
     /* สีน้ำเงิน */
     color: white;
     font-style: inherit;
     /* สีตัวอักษร */
-    font-size: 18px;
+    font-size: 25px;
     font-weight: bold;
     padding: 12px 24px;
     border: none;
@@ -249,6 +297,7 @@ h2 {
 .nav_container,
 h2,
 p,
+.logo1,
 button {
     opacity: 0;
     transform: translateY(20px);
@@ -269,7 +318,7 @@ p {
     animation-delay: 0.8s;
 }
 
-logoo {
+.logo1 {
     animation-delay: 0.8s;
 }
 
