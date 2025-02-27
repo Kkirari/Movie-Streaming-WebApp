@@ -35,10 +35,44 @@ export const MovieController = new Elysia({
         response: t.Array(movieSchema)
     })
 
+    .get('/get_id/:id', async ({ params, set }) => {
+        try {
+            const movie = await MovieService.getById(params.id);
+
+            if (!movie) {
+                set.status = 404;
+                throw new Error("Movie not found");
+            }
+
+            return {
+                message: `Movie "${movie.title}" fetched successfully`,
+                movie: movie
+            };
+        } catch (error) {
+            set.status = 400;
+            throw new Error(error instanceof Error ? error.message : "Failed to get movie");
+        }
+    }, {
+        detail: { summary: "Get movie by ID" },
+        params: t.Object({ id: t.String() }),
+        response: t.Object({
+            message: t.String(),
+            movie: movieSchema
+        })
+    })
+
     .delete("/delete/:id", async ({ params, set }) => {
         try {
+            const movieToDelete = await MovieService.getById(params.id);
+
+            if (!movieToDelete) {
+                set.status = 404;
+                throw new Error("Movie not found");
+            }
+
             await MovieService.deleteById(params.id);
-            return { message: "Movie deleted successfully" };
+
+            return { message: `Movie "${movieToDelete.title}" deleted successfully` };
         } catch (error) {
             set.status = 400;
             throw new Error(error instanceof Error ? error.message : "Failed to delete movie");
@@ -47,4 +81,5 @@ export const MovieController = new Elysia({
         detail: { summary: "Delete a movie by ID" },
         params: t.Object({ id: t.String() })
     });
+
 

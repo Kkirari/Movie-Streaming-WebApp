@@ -21,11 +21,12 @@ export const MovieService = {
     },
 
 
-    getByTitle: async function (username: string): Promise<Movie> {
-        const user = await movie.findOne({ username }).exec()
-        if (user)
-            return user.toMovie()
-        throw new Error(`"${username}" is not found!`)
+    getById: async function (ID: string): Promise<Movie> {
+        const result = await movie.findById(ID).exec()
+        if (!result) {
+            throw new Error(`"${ID}" is not found!`)
+        }
+        return result.toMovie()
     },
 
     deleteById: async function (id: string): Promise<void> {

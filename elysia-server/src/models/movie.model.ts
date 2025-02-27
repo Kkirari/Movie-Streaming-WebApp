@@ -9,7 +9,7 @@ const schema = new mongoose.Schema<IMovieDocument, IMovieModel>(
         overview: { type: String, required: true },
         release_date: { type: String, required: true },
         poster_path: { type: String, required: true },
-
+        trailer_path: { type: String, required: true },
         tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tags' }],
     },
 );
@@ -27,6 +27,7 @@ schema.methods.toMovie = function (): MoviePostData {
         overview: this.overview,
         release_date: this.release_date,
         poster_path: this.poster_path,
+        trailer_path: this.trailer_path,
         tags: movieTags
     };
 };

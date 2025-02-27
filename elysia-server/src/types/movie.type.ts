@@ -9,6 +9,7 @@ export const movieSchema = t.Object({
     overview: t.String(),
     release_date: t.String(),
     poster_path: t.String(),
+    trailer_path: t.Optional(t.String()),
     tags: t.Optional(t.Array(tagsSchema))
 })
 
@@ -19,6 +20,7 @@ export const moviePostSchema = t.Object({
     overview: t.String(),
     release_date: t.String(),
     poster_path: t.String(),
+    trailer_path: t.Optional(t.String()),
     tags: t.Optional(t.Array(tagsSchema))
 })
 const _moviePagination = t.Object({
