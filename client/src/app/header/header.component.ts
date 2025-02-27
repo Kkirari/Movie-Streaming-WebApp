@@ -10,7 +10,7 @@ import { Router } from '@angular/router'
   selector: 'app-header',
   imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatMenuModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
   private accountService = inject(AccountService)

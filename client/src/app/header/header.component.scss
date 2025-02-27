@@ -1,0 +1,66 @@
+.logo {
+    width: 120px;
+    height: 50px;
+
+}
+
+.nav_container {
+    position: fixed;
+    /* ให้ Navbar คงที่อยู่ด้านบน */
+    width: 100%;
+    /* ขยายเต็มหน้าจอ */
+    background: rgba(0, 0, 0, 0.8);
+    /* สีดำโปร่งแสง */
+    backdrop-filter: blur(3px);
+    /* เพิ่มเอฟเฟกต์เบลอ */
+    padding: 10px 20px;
+    /* ปรับระยะห่างขอบ */
+    display: flex;
+    /* จัดให้อยู่ในแนวเดียวกัน */
+    align-items: center;
+    /* จัดกึ่งกลางแนวตั้ง */
+    justify-content: space-between;
+    /* จัดระยะห่างซ้าย-ขวา */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    /* เพิ่มเงาด้านล่าง */
+    z-index: 1000;
+    /* ให้อยู่ด้านบนสุด */
+}
+
+ul {
+    list-style: none;
+    /* ซ่อนจุดหน้ารายการ */
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    font-size: 20px;
+}
+
+
+li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+ul li a:hover {
+    background: #0004ff;
+    padding: 5px;
+
+
+}
+
+.login {
+    margin-right: 50px;
+}
+
+.login a:hover {
+    background: #0011ff;
+    padding: 5px;
+}
