@@ -1,22 +1,25 @@
 import Elysia, { Static, t } from "elysia"
 import { _pagination, CreatePagination } from "./pagination.type"
+import { tagsSchema } from "./tags.type"
 
 
-export const MovieSchema = t.Object({
+export const movieSchema = t.Object({
+    id: t.String(),
     title: t.String(),
     overview: t.String(),
     release_date: t.String(),
     poster_path: t.String(),
-    // genre_ids: t.Array(t.Numeric()),
+    tags: t.Optional(t.Array(tagsSchema))
 })
 
 
-export const MoviePostSchema = t.Object({
+export const moviePostSchema = t.Object({
+    id: t.Optional(t.String()),
     title: t.String(),
     overview: t.String(),
     release_date: t.String(),
     poster_path: t.String(),
-    // genre_ids: t.Array(t.Numeric()),
+    tags: t.Optional(t.Array(tagsSchema))
 })
 const _moviePagination = t.Object({
     ..._pagination.properties,
@@ -24,19 +27,19 @@ const _moviePagination = t.Object({
     overview: t.String(),
     release_date: t.String(),
     poster_path: t.String(),
-    // genre_ids: t.Array(t.Numeric()),
+    tags: t.Optional(t.Array(tagsSchema))
 })
-export const _moviePaginator = CreatePagination(MovieSchema, _moviePagination)
+export const _moviePaginator = CreatePagination(movieSchema, _moviePagination)
 
 export const MovieDto = new Elysia().model({
     pagination: t.Optional(_moviePagination),
     // updateProfile: _updateProfile,
     users: _moviePagination,
-    user: MovieSchema,
+    user: movieSchema,
     target_id: t.Object({ target_id: t.String() }),
 })
 
 export type moviePaginator = Static<typeof _moviePaginator>
 export type moviePagination = Static<typeof _moviePagination>
-export type Movie = typeof MovieSchema.static
-export type MoviePostData = typeof MoviePostSchema.static
+export type Movie = typeof movieSchema.static
+export type MoviePostData = typeof moviePostSchema.static

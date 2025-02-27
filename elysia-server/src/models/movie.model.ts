@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { IMovieDocument, IMovieModel } from "../interface/movie.interface";
 import { MoviePostData } from "../types/movie.type";
+import { tags } from "./tags.model";
 
 const schema = new mongoose.Schema<IMovieDocument, IMovieModel>(
     {
@@ -8,18 +9,25 @@ const schema = new mongoose.Schema<IMovieDocument, IMovieModel>(
         overview: { type: String, required: true },
         release_date: { type: String, required: true },
         poster_path: { type: String, required: true },
-        // genre_ids: { type: [Number], required: true },
+
+        tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tags' }],
     },
 );
 
-// **Method: แปลงเป็น Movie Type**
+
 schema.methods.toMovie = function (): MoviePostData {
+
+    const movieTags = Array.isArray(this.tags)
+        ? this.tags.map(tags => (new tags(tags)).toTags())
+        : undefined
+
     return {
+        id: this._id.toString(),
         title: this.title,
         overview: this.overview,
         release_date: this.release_date,
         poster_path: this.poster_path,
-        // genre_ids: this.genre_ids,
+        tags: movieTags
     };
 };
 

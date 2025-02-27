@@ -1,5 +1,5 @@
 import { Elysia, t } from "elysia"
-import { MovieSchema, MoviePostSchema, Movie, MoviePostData, MovieDto } from "../types/movie.type"
+import { movieSchema, moviePostSchema, Movie, MoviePostData, MovieDto } from "../types/movie.type"
 import { MovieService } from "../service/movie.service";
 import { AuthMiddleWare } from "../middlewares/auth.middleware";
 
@@ -22,8 +22,8 @@ export const MovieController = new Elysia({
             }
         },
         {
-            body: MoviePostSchema,
-            response: MovieSchema,
+            body: moviePostSchema,
+            response: movieSchema,
             detail: { summary: "Create a new movie" }
         }
     )
@@ -32,5 +32,19 @@ export const MovieController = new Elysia({
         return await MovieService.get();
     }, {
         detail: { summary: "Get all movies" },
-        response: t.Array(MovieSchema)
+        response: t.Array(movieSchema)
     })
+
+    .delete("/delete/:id", async ({ params, set }) => {
+        try {
+            await MovieService.deleteById(params.id);
+            return { message: "Movie deleted successfully" };
+        } catch (error) {
+            set.status = 400;
+            throw new Error(error instanceof Error ? error.message : "Failed to delete movie");
+        }
+    }, {
+        detail: { summary: "Delete a movie by ID" },
+        params: t.Object({ id: t.String() })
+    });
+
