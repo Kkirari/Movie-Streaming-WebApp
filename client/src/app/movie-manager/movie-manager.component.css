@@ -1,0 +1,107 @@
+.movie-manager {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+  
+mat-card {
+    margin-bottom: 20px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.movie-section {
+    margin-bottom: 20px;
+}
+
+
+
+.movie-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f5f5f5;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+button[mat-raised-button] {
+    margin-top: 10px;
+}
+
+mat-form-field {
+    margin-bottom: 15px;
+}
+
+.movie-card {
+    position: relative;
+    width: calc(20% - 15px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.movie-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.movie-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.movie-title {
+    font-size: 1em;
+    margin: 0;
+}
+
+.movie-year {
+    font-size: 0.9em;
+    margin: 5px 0 0;
+}
+
+mat-paginator {
+    margin-top: 20px;
+}
+.movie-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.movie-actions button.mat-icon-button {
+    color: white; /* สีของไอคอนเป็นสีขาว */
+}
+
+.mat-icon {
+    font-size: 24px; /* ขนาดของไอคอน */
+}
+.material-icons{
+    color: #8b8b8b;
+}
