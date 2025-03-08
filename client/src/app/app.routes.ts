@@ -21,6 +21,10 @@ export const routes: Routes = [
         loadComponent: () => import('./movie-list/movie-list.component').then(c => c.MovieListComponent)
     },
     {
+        path: 'movie-manager',
+        loadComponent: () => import('./movie-manager/movie-manager.component').then(c => c.MovieManagerComponent)
+    },
+    {
         path: '**',
         pathMatch: 'full',
         loadComponent: () => import('./not-found/not-found.component').then(c => c.NotFoundComponent)
