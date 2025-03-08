@@ -7,7 +7,12 @@ export const routes: Routes = [
     {
         path: '',
         component: HomeComponent
-    }, {
+    },
+    {
+        path: 'login',
+        loadComponent: () => import('./login/login.component').then(c => c.LoginComponent)
+    },
+    {
         path: '404',
         loadComponent: () => import('./not-found/not-found.component').then(c => c.NotFoundComponent)
     },
