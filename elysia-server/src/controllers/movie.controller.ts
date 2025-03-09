@@ -1,7 +1,8 @@
 import { Elysia, t } from "elysia"
-import { movieSchema, moviePostSchema, Movie, MoviePostData, MovieDto } from "../types/movie.type"
+import { movieSchema, moviePostSchema, Movie, MoviePostData, MovieDto, _updateMovie } from "../types/movie.type"
 import { MovieService } from "../service/movie.service";
 import { AuthMiddleWare } from "../middlewares/auth.middleware";
+import { tagsSchema } from "../types/tags.type";
 
 export const MovieController = new Elysia({
     prefix: "/api/movies",
@@ -80,6 +81,64 @@ export const MovieController = new Elysia({
     }, {
         detail: { summary: "Delete a movie by ID" },
         params: t.Object({ id: t.String() })
-    });
+    })
+
+    .patch("/update/:id", async ({ params, body, set }) => {
+        try {
+            const updatedMovie = await MovieService.updateMovieById(params.id, body);
+            return {
+                message: `Movie "${updatedMovie.title}" updated successfully`,
+                movie: updatedMovie
+            };
+        } catch (error) {
+            set.status = 400;
+            throw new Error(error instanceof Error ? error.message : "Failed to update movie");
+        }
+    }, {
+        detail: { summary: "Update a movie by ID" },
+        params: t.Object({ id: t.String() }),
+        body: _updateMovie,
+        response: t.Object({
+            message: t.String(),
+            movie: movieSchema
+        })
+    })
+
+
+    .post(
+        "/add-tags/:id",
+        async ({ params, body, set }) => {
+            try {
+                const { id } = params;
+                const { tags } = body;
+
+                // แปลง tags จาก object เป็น array ของชื่อแท็ก
+                const tagNames = tags.map(tag => tag.name);
+
+                // เรียกใช้งาน Service
+                const updatedMovie = await MovieService.addTagsToMovies(tagNames, id);
+
+                return {
+                    message: `Tags added to movie "${updatedMovie.title}" successfully`,
+                    movie: updatedMovie
+                };
+            } catch (error) {
+                set.status = 400;
+                throw new Error(error instanceof Error ? error.message : "Failed to add tags to movie");
+            }
+        },
+        {
+            detail: { summary: "Add tags to a movie by ID" },
+            params: t.Object({ id: t.String() }),
+            body: t.Object({
+                tags: t.Array(tagsSchema) // ยอมรับ array ของ { id, name }
+            }),
+            response: t.Object({
+                message: t.String(),
+                movie: movieSchema
+            })
+        }
+    )
+
 
 

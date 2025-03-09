@@ -1,4 +1,5 @@
 import Elysia from "elysia"
+
 import { JWTPayloadSpec } from "@elysiajs/jwt"
 import { jwtConfig } from "../config/jwt.config"
 

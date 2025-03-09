@@ -45,6 +45,52 @@ export class MovieService {
             return error?.error?.message || 'Unknown error occurred';
         }
     }
+    async deleteMovie(movieId: string): Promise<string> {
+        try {
+            const url = `${this.baseApiUrl}/delete/${movieId}`;
+            const response = this.http.delete<{ message: string }>(url);
+            const data = await firstValueFrom(response);
+            console.log('Movie deleted successfully:', data);
+            return 'Success';
+        } catch (error: any) {
+            console.error('Error deleting movie:', error);
+            return error?.error?.message || 'Failed to delete movie';
+        }
+    }
 
+    async deleteTags(tagId: string): Promise<string> {
+        try {
+            const url = `${this.TagsBaseApiUrl}/delete/${tagId}`;
+            const response = this.http.delete<{ message: string }>(url);
+            const data = await firstValueFrom(response);
+            console.log('Tag deleted successfully:', data);
+            return 'Success';
+        } catch (error: any) {
+            console.error('Error deleting tag:', error);
+            return error?.error?.message || 'Failed to delete tag';
+
+        }
+    }
+
+    async updateMovie(movie: Movie, movieId: string): Promise<string> {
+        try {
+            const url = `${this.baseApiUrl}/update/${movieId}`;
+            const response = this.http.patch(url, movie);
+            await firstValueFrom(response);
+            return 'Success';
+        } catch (error: any) {
+            return error?.error?.message || 'Failed to update';
+        }
+    }
+    async updateTags(tags: Tags, tagsID: string): Promise<string> {
+        try {
+            const url = `${this.TagsBaseApiUrl}/update/${tagsID}`;
+            const response = this.http.patch(url, tags);
+            await firstValueFrom(response);
+            return 'Success';
+        } catch (error: any) {
+            return error?.error?.message || 'Failed to update';
+        }
+    }
 
 }

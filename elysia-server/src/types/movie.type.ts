@@ -10,8 +10,9 @@ export const movieSchema = t.Object({
     release_date: t.String(),
     poster_path: t.String(),
     trailer_path: t.Optional(t.String()),
-    tags: t.Optional(t.Array(tagsSchema))
-})
+    tags: t.Optional(t.Array(t.String())) // รับเป็น string[] แทน ObjectId[]
+});
+
 
 
 export const moviePostSchema = t.Object({
@@ -38,10 +39,12 @@ export const MovieDto = new Elysia().model({
     // updateProfile: _updateProfile,
     users: _moviePagination,
     user: movieSchema,
-    target_id: t.Object({ target_id: t.String() }),
 })
+
+export const _updateMovie = t.Omit(moviePostSchema, ['id'])
 
 export type moviePaginator = Static<typeof _moviePaginator>
 export type moviePagination = Static<typeof _moviePagination>
 export type Movie = typeof movieSchema.static
 export type MoviePostData = typeof moviePostSchema.static
+export type UpdateMovie = Static<typeof _updateMovie>
