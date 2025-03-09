@@ -21,8 +21,53 @@
 
 </section>
 
+
+<div class="container">
+  <h2>หาแพ็กเกจที่เหมาะกับคุณที่สุด</h2>
+  <p class="highlight">ประหยัดได้สูงสุดถึง 42%</p>
+
+  <!-- Toggle Switch -->
+  <div class="toggle-container">
+    <button [class.active]="isMonthly" (click)="setPlan(true)">รายเดือน</button>
+    <button [class.active]="!isMonthly" (click)="setPlan(false)">รายปี</button>
+
+
+  </div>
+  <div>
+    <!-- แสดงข้อมูลแพ็กเกจ -->
+    <div class="plans">
+      <div class="plan">
+        <h3>มาตรฐาน</h3>
+        <ul>
+          <li>สตรีมบนอุปกรณ์ 2 เครื่องพร้อมกัน</li>
+          <li>ความละเอียดระดับ Full HD</li>
+          <li>รับชมบนอุปกรณ์อื่นๆ ได้มากขึ้น</li>
+          <li>ดาวน์โหลดได้ {{ isMonthly ? '30' : '50' }} เรื่อง</li>
+        </ul>
+        <p class="price">฿{{ isMonthly ? '199' : '1,999' }}/{{ isMonthly ? 'เดือน' : 'ปี' }}</p>
+        <button class="select-btn">โปรดเลือกแพ็กเกจ</button>
+      </div>
+
+      <div class="plan premium">
+        <h3>อัลติเมท</h3>
+        <ul>
+          <li>สตรีมบนอุปกรณ์ 4 เครื่องพร้อมกัน</li>
+          <li>4K UHD และ Dolby Atmos</li>
+          <li>รับชมบนอุปกรณ์อื่นๆ ได้มากขึ้น</li>
+          <li>ดาวน์โหลดได้ {{ isMonthly ? '100' : '150' }} เรื่อง</li>
+        </ul>
+        <p class="price">฿{{ isMonthly ? '299' : '2,999' }}/{{ isMonthly ? 'เดือน' : 'ปี' }}</p>
+        <button class="select-btn">โปรดเลือกแพ็กเกจ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 <body>
-  <h1><strong>A Brand New Streaming Experience</strong></h1>
+
   <div class="slider">
 
     <div class="slide-track">
@@ -101,4 +146,5 @@
   <div class="part3main">
 
   </div>
+
 </section>

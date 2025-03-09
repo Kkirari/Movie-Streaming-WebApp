@@ -7,7 +7,7 @@ import mongoose from "mongoose"
 
 export const AccountController = new Elysia({
     prefix: "/api/account",
-    tags: ['account']
+    tags: ['Account']
 })
 
     .use(jwtConfig)
@@ -15,7 +15,7 @@ export const AccountController = new Elysia({
     .use(AccountDto)
 
     .post(
-        "/login",
+        '/login',
         async ({ body, jwt, set }) => {
             try {
                 const user = await AccountService.login(body)
@@ -36,17 +36,23 @@ export const AccountController = new Elysia({
     )
 
     .post(
-        "/register",
+        '/register',
         async ({ body, jwt, set }) => {
             try {
+<<<<<<< HEAD
                 const user = await AccountService.createNewUser(body);
                 const token = await jwt.sign({ id: user.id });
                 return { token, user };
+=======
+                const user = await AccountService.createNewUser(body)
+                const token = await jwt.sign({ id: user.username })
+                return { token, user }
+>>>>>>> 03638837042ad631da5728c2be699c90dea8ed21
             } catch (error) {
-                set.status = "Bad Request";
-                if (error instanceof Error) throw new Error(error.message);
-                set.status = 500;
-                throw new Error("Something wen wrong, try again later");
+                set.status = "Bad Request"
+                if (error instanceof Error) throw new Error(error.message)
+                set.status = 500
+                throw new Error("Something wen wrong, try again later")
             }
         },
         {
@@ -57,14 +63,15 @@ export const AccountController = new Elysia({
             },
 
             beforeHandle: ({ body: { username, password }, set }) => {
-                const usernameRegex = /^[A-Za-z][A-Za-z\d]{3,19}$/;
-                const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$/;
+                const usernameRegex = /^[A-Za-z][A-Za-z\d]{3,19}$/
+                const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$/
                 if (!usernameRegex.test(username) || !passwordRegex.test(password)) {
-                    set.status = "Bad Request";
-                    throw new Error(`Invalid username or password`);
+                    set.status = "Bad Request"
+                    throw new Error(`Invalid username or password`)
                 }
             },
         }
+<<<<<<< HEAD
     )
 
     .patch('/', async ({ body, set, Auth }) => {
@@ -84,3 +91,6 @@ export const AccountController = new Elysia({
         body: "updateProfile",
         isSignIn: true
     })
+=======
+    )
+>>>>>>> 03638837042ad631da5728c2be699c90dea8ed21
