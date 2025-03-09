@@ -32,7 +32,7 @@ schema.statics.createTags = async function (
     return newTags;
 };
 
-export const tags = mongoose.model<ITagsDocument, ITagsModel>(
+export const TagsSchema = mongoose.model<ITagsDocument, ITagsModel>(
     "Tags",
     schema
 );

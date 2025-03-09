@@ -1,15 +1,25 @@
-import { Component, inject, signal } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PasswordValidator } from '../_helpers/password.validator';
-import { PasswordMatchValidator } from '../_helpers/password-mathch.validator';
-import { AccountService } from '../_services/account.service';
-import { Router } from '@angular/router';
+import { Component, inject, signal } from '@angular/core'
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms'
+
+import { CommonModule } from '@angular/common'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import { MatButtonModule } from '@angular/material/button'
+import { provideNativeDateAdapter } from '@angular/material/core'
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatRadioModule } from '@angular/material/radio'
+import { MatCardModule } from '@angular/material/card'
+import { AccountService } from '../_services/account.service'
+import { Router } from '@angular/router'
+import { PasswordMatchValidator } from '../_helpers/password-mathch.validator'
+import { PasswordValidator } from '../_helpers/password.validator'
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule,
+    MatDatepickerModule, MatRadioModule, MatCardModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent {
   mode: 'login' | 'register' = 'login'

@@ -1,7 +1,7 @@
-import jwt from "@elysiajs/jwt"
+import jwt from "@elysiajs/jwt";
 
 export const jwtConfig = jwt({
     name: 'jwt',
-    secret: Bun.env.JWT_SECRET || 'test secret for the project',
+    secret: Bun.env.JWT_SECRET || 'test secreat for the project',
     exp: '1d'
 })

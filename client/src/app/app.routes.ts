@@ -12,6 +12,10 @@ export const routes: Routes = [
         loadComponent: () => import('./not-found/not-found.component').then(c => c.NotFoundComponent)
     },
     {
+        path: 'login',
+        loadComponent: () => import('./login/login.component').then(c => c.LoginComponent)
+    },
+    {
         path: 'movie-list',
         loadComponent: () => import('./movie-list/movie-list.component').then(c => c.MovieListComponent)
     },

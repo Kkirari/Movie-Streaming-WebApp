@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { IMovieDocument, IMovieModel } from "../interface/movie.interface";
 import { MoviePostData } from "../types/movie.type";
-import { tags } from "./tags.model";
+import { TagsSchema } from "./tags.model";
 
 const schema = new mongoose.Schema<IMovieDocument, IMovieModel>(
     {
@@ -10,9 +10,10 @@ const schema = new mongoose.Schema<IMovieDocument, IMovieModel>(
         release_date: { type: String, required: true },
         poster_path: { type: String, required: true },
         trailer_path: { type: String, required: true },
-        tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tags' }],
+        tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }]
     },
 );
+
 
 
 schema.methods.toMovie = function (): MoviePostData {
@@ -46,7 +47,7 @@ schema.statics.createMovie = async function (
     return newMovie;
 };
 
-export const movie = mongoose.model<IMovieDocument, IMovieModel>(
+export const MovieSchema = mongoose.model<IMovieDocument, IMovieModel>(
     "Movie",
     schema
 );

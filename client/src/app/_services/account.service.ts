@@ -16,6 +16,7 @@ export class AccountService {
 
     private _key = 'account';
     private _baseApiUrl = environment.baseUrl + 'api/account/'
+    private baseApiUrl = 'https://localhost:8000/api/account/';
     private _http = inject(HttpClient)
 
     data = signal<{ user: User, token: string } | null>(null)
@@ -32,7 +33,7 @@ export class AccountService {
 
     async login(loginData: { username: string, password: string }): Promise<string> {
         try {
-            const url = this._baseApiUrl + 'login'
+            const url = this.baseApiUrl + 'login'
             const response = this._http.post<{ user: User, token: string }>(url, loginData)
             const data = await firstValueFrom(response)
             this.data.set(data)
@@ -45,16 +46,19 @@ export class AccountService {
 
     async register(registerData: User): Promise<string> {
         try {
-            const url = this._baseApiUrl + 'register'
+            const url = this.baseApiUrl + 'register'
             const response = this._http.post<{ user: User, token: string }>(url, registerData)
             const data = await firstValueFrom(response)
             this.data.set(data)
             this.saveDataToLocalStorage()
             return ''
+
+
         } catch (error: any) {
             return error.error?.message
         }
     }
+
 
     private saveDataToLocalStorage() {
         const jsonString = JSON.stringify(this.data())
@@ -68,13 +72,6 @@ export class AccountService {
             this.data.set(data)
         }
     }
-
-
-
-
-
-
-
 
     public SetUser(user: User) {
         this.setUser(user)

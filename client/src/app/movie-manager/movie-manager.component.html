@@ -59,15 +59,6 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="full-width">
-                    <mat-label>Tags</mat-label>
-                    <mat-select formControlName="tags" multiple>
-                        <mat-option *ngFor="let tag of tags" [value]="tag.id">
-                            {{ tag.name }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-
 
 
                 <button (click)="addMovie()" mat-raised-button color="primary" [disabled]="movieForm.invalid">
@@ -91,10 +82,10 @@
                             <div class="movie-overlay">
                                 <h3 class="movie-title">{{ movie.title }}</h3>
                                 <div class="movie-actions">
-                                    <button mat-icon-button (click)="editMovie()">
+                                    <button mat-icon-button (click)="selectedMovie = movie">
                                         <mat-icon>edit</mat-icon>
                                     </button>
-                                    <button mat-icon-button color="warn" (click)="deleteMovie()">
+                                    <button mat-icon-button color="warn" (click)="deleteMovie(movie.id!)">
                                         <mat-icon>delete</mat-icon>
                                     </button>
                                 </div>
@@ -104,59 +95,142 @@
                 </div>
 
                 <!-- Pagination -->
-                <mat-paginator [length]="movies.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                <mat-paginator [length]=" movies.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
                     (page)="onPageChange($event)">
                 </mat-paginator>
             </mat-card-content>
         </mat-card>
-    </div>
 
 
-
-
-    <!-- เพิ่มแท็กใหม่ -->
-    <mat-card>
-        <mat-card-title>Add New Tag</mat-card-title>
-        <mat-card-content>
-            <form [formGroup]="tagForm" (ngSubmit)="onSubmit()">
+        <div *ngIf="selectedMovie" class="edit-section">
+            <p>Editing: {{selectedMovie.title}}</p>
+            <form [formGroup]="movieUpdateForm">
+                <!-- ชื่อหนัง -->
                 <mat-form-field class="full-width">
-                    <mat-label>Tag Name</mat-label>
-                    <input matInput placeholder="Enter tag name" formControlName="name">
+                    <mat-label>Title</mat-label>
+                    <input matInput [(ngModel)]="selectedMovie.title" formControlName="title"
+                        placeholder="Enter movie title" />
+                    <mat-error *ngIf="movieUpdateForm.get('title')?.hasError('required')">
+                        Title is required.
+                    </mat-error>
                 </mat-form-field>
-                <button type="submit" mat-raised-button color="primary">Add Tag</button>
+
+                <!-- เรื่องย่อ -->
+                <mat-form-field class="full-width">
+                    <mat-label>Overview</mat-label>
+                    <textarea matInput [(ngModel)]="selectedMovie.overview" formControlName="overview"
+                        placeholder="Enter movie overview"></textarea>
+                    <mat-error *ngIf="movieUpdateForm.get('overview')?.hasError('required')">
+                        Overview is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- วันที่ฉาย -->
+                <mat-form-field class="full-width">
+                    <mat-label>Release Date</mat-label>
+                    <input matInput [(ngModel)]="selectedMovie.release_date" formControlName="release_date"
+                        type="date" />
+                    <mat-error *ngIf="movieUpdateForm.get('release_date')?.hasError('required')">
+                        Release date is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Poster Path -->
+                <mat-form-field class="full-width">
+                    <mat-label>Poster Path</mat-label>
+                    <input matInput [(ngModel)]="selectedMovie.poster_path" formControlName="poster_path"
+                        placeholder="Enter poster path (e.g., /path/to/poster.jpg)" />
+                    <mat-error *ngIf="movieUpdateForm.get('poster_path')?.hasError('required')">
+                        Poster path is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Trailer Path -->
+                <mat-form-field class="full-width">
+                    <mat-label>Trailer Path</mat-label>
+                    <input matInput [(ngModel)]="selectedMovie.trailer_path" formControlName="trailer_path"
+                        placeholder="Enter trailer path (e.g., /path/to/trailer.mp4)" />
+                    <mat-error *ngIf="movieUpdateForm.get('trailer_path')?.hasError('required')">
+                        Trailer path is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="button-group">
+                    <button mat-raised-button color="primary" (click)="updateMovie(selectedMovie.id)"
+                        (click)="selectedMovie = null" [disabled]="movieUpdateForm.invalid">
+                        Update Movie
+                    </button>
+                    <button mat-raised-button (click)="selectedMovie = null">Close</button>
+                </div>
             </form>
-        </mat-card-content>
-    </mat-card>
+        </div>
 
-    <!-- รายการแท็ก -->
-    <mat-card>
-        <mat-card-title>Tag List</mat-card-title>
-        <mat-card-content>
-            <table mat-table [dataSource]="tags" class="full-width">
-                <!-- Column: Tag Name -->
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef>Tag Name</th>
-                    <td mat-cell *matCellDef="let tag">{{ tag.name }}</td>
-                </ng-container>
 
-                <!-- Column: Actions -->
-                <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef>Actions</th>
-                    <td mat-cell *matCellDef="let tag">
-                        <button mat-icon-button color="primary" (click)="editTag()">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        <button mat-icon-button color="warn" (click)="deleteTag()">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </td>
-                </ng-container>
 
-                <!-- Header & Row Definitions -->
-                <tr mat-header-row *matHeaderRowDef="['name', 'actions']"></tr>
-                <tr mat-row *matRowDef="let row; columns: ['name', 'actions'];"></tr>
-            </table>
-        </mat-card-content>
-    </mat-card>
 
-</div>
+        <!-- เพิ่มแท็กใหม่ -->
+        <mat-card>
+            <mat-card-title>Add New Tag</mat-card-title>
+            <mat-card-content>
+                <form [formGroup]="tagForm" (ngSubmit)="onSubmit()">
+                    <mat-form-field class="full-width">
+                        <mat-label>Tag Name</mat-label>
+                        <input matInput placeholder="Enter tag name" formControlName="name">
+                    </mat-form-field>
+                    <button type="submit" mat-raised-button color="primary">Add Tag</button>
+                </form>
+            </mat-card-content>
+        </mat-card>
+
+
+
+        <mat-card>
+            <mat-card-title>Tag List</mat-card-title>
+            <mat-card-content>
+                <table mat-table [dataSource]="tags" class="full-width">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>Tag Name</th>
+                        <td mat-cell *matCellDef="let tag">{{ tag.name }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>Actions</th>
+                        <td mat-cell *matCellDef="let tag">
+                            <button mat-icon-button color="primary" (click)="selectedTag = tag">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn" (click)="deleteTags(tag.id)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="['name', 'actions']"></tr>
+                    <tr mat-row *matRowDef="let row; columns: ['name', 'actions'];"></tr>
+                </table>
+
+                <!-- Edit section -->
+                <div *ngIf="selectedTag" class="edit-section">
+                    <p>Editing: {{selectedTag.name}}</p>
+                    <form [formGroup]="tagUpdateForm">
+                        <mat-form-field class="full-width">
+                            <mat-label>name</mat-label>
+                            <input matInput [(ngModel)]="selectedTag.name" formControlName="name"
+                                placeholder="Enter tag name" />
+                            <mat-error *ngIf="tagUpdateForm.get('name')?.hasError('required')">
+                                name is required.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <div class="button-group">
+                            <button mat-raised-button color="primary" (click)="updateTag(selectedTag.id)"
+                                (click)="selectedTag = null" [disabled]="tagUpdateForm.invalid">
+                                Update Tag
+                            </button>
+                            <button mat-raised-button (click)="selectedTag = null">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
