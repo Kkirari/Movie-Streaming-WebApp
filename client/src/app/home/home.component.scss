@@ -1,4 +1,105 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #0022ff;
+    color: white;
+}
+
+.container {
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+.highlight {
+    color: #0011ff;
+}
+
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.toggle-container button {
+    background: none;
+    border: 2px solid white;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.toggle-container .active {
+    background: white;
+    color: #0022ff;
+}
+
+.plans {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.plan {
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+    width: 45%;
+}
+
+.plan h3 {
+    font-size: 20px;
+}
+
+.plan ul {
+    list-style: none;
+    padding: 0;
+}
+
+.plan ul li {
+    margin: 5px 0;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0022ff;
+}
+
+.select-btn {
+    background: #0022ff;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.select-btn:hover {
+    background: #0011aa;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .logo1 {
@@ -26,6 +127,7 @@ h1 {
 
 
 body {
+
     min-height: 100vh;
     display: grid;
     place-items: center;
