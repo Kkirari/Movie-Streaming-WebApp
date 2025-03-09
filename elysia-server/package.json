@@ -9,6 +9,7 @@
     "@elysiajs/cors": "^1.2.0",
     "@elysiajs/jwt": "^1.2.0",
     "@elysiajs/static": "^1.2.0",
+    "@elysiajs/swagger": "^1.2.2",
     "elysia": "latest",
     "mongoose": "^8.10.1",
     "ms": "^2.1.3",

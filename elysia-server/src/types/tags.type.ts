@@ -16,3 +16,5 @@ export const tagsDto = new Elysia().model({
     tag: tagsSchema,
     tags: t.Array(tagsSchema)
 })
+export const _updateTags = t.Omit(tagsSchema, ['id'])
+export type UpdateTags = Static<typeof _updateTags>

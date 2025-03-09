@@ -1,7 +1,9 @@
 import Elysia from "elysia"
 import { jwtConfig } from "../config/jwt.config"
-import { _accountToken, AccountDto } from "../types/account.type"
+import { _accountToken, _user, AccountDto } from "../types/account.type"
 import { AccountService } from "../service/account.service"
+import { AuthMiddleWare, AuthPayload } from "../middlewares/auth.middleware"
+import mongoose from "mongoose"
 
 export const AccountController = new Elysia({
     prefix: "/api/account",
@@ -9,6 +11,7 @@ export const AccountController = new Elysia({
 })
 
     .use(jwtConfig)
+    .use(AuthMiddleWare)
     .use(AccountDto)
 
     .post(
@@ -16,7 +19,7 @@ export const AccountController = new Elysia({
         async ({ body, jwt, set }) => {
             try {
                 const user = await AccountService.login(body)
-                const token = await jwt.sign({ id: user.username })
+                const token = await jwt.sign({ id: user.id })
                 return { user, token }
             } catch (error) {
                 set.status = "Bad Request"
@@ -37,7 +40,7 @@ export const AccountController = new Elysia({
         async ({ body, jwt, set }) => {
             try {
                 const user = await AccountService.createNewUser(body);
-                const token = await jwt.sign({ id: user.username });
+                const token = await jwt.sign({ id: user.id });
                 return { token, user };
             } catch (error) {
                 set.status = "Bad Request";
@@ -62,4 +65,22 @@ export const AccountController = new Elysia({
                 }
             },
         }
-    );
+    )
+
+    .patch('/', async ({ body, set, Auth }) => {
+        try {
+            const user_id = (Auth.payload as AuthPayload).id
+            await AccountService.updateProfile(body, user_id)
+            set.status = 'No Content'
+        } catch (error) {
+            set.status = 'Bad Request'
+            if (error instanceof Error)
+                throw new Error(error.message)
+            set.status = 500
+            throw new Error('Something went wrong ,Try again')
+        }
+    }, {
+        detail: { summary: "Update Profile" },
+        body: "updateProfile",
+        isSignIn: true
+    })

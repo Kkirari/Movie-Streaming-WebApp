@@ -6,6 +6,8 @@ import { MovieController } from "./controllers/movie.controller"
 import cors from "@elysiajs/cors"
 import { MongoDB } from "./config/database.config"
 import { TagsController } from "./controllers/tag.controller"
+import { jwtConfig } from "./config/jwt.config"
+import { SwaggerConfig } from "./config/swagger.config"
 
 MongoDB.connect()
 
@@ -14,6 +16,8 @@ const app = new Elysia()
   .use(AccountController)
   .use(MovieController)
   .use(TagsController)
+  .use(jwtConfig)
+  .use(SwaggerConfig)
   .use(staticPlugin({
     assets: "public/client",
     prefix: "",
