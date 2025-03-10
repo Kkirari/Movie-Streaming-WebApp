@@ -1,7 +1,7 @@
 import { Elysia, t } from "elysia"
 import { movieSchema, moviePostSchema, Movie, MoviePostData, MovieDto, _updateMovie } from "../types/movie.type"
 import { MovieService } from "../service/movie.service";
-import { AuthMiddleWare } from "../middlewares/auth.middleware";
+import { AuthMiddleWare, AuthPayload } from "../middlewares/auth.middleware";
 import { tagsSchema } from "../types/tags.type";
 
 export const MovieController = new Elysia({
@@ -13,8 +13,9 @@ export const MovieController = new Elysia({
 
     .post(
         "/upload-movie",
-        async ({ body, set }) => {
+        async ({ body, set, Auth }) => {
             try {
+                const user_id = (Auth.payload as AuthPayload).id
                 const newMovie = await MovieService.createNewMovie(body);
                 return newMovie;
             } catch (error) {
@@ -25,9 +26,42 @@ export const MovieController = new Elysia({
         {
             body: moviePostSchema,
             response: movieSchema,
-            detail: { summary: "Create a new movie" }
+            detail: { summary: "Create a new movie" },
+            isSignIn: true
         }
     )
+
+    // .post(
+    //     "/upload-movie",
+    //     async ({ body, set, Auth }) => {
+    //         try {
+    //             if (!Auth || !Auth.payload) {
+    //                 set.status = 401; // Unauthorized
+    //                 throw new Error("Authentication required");
+    //             }
+
+    //             const user_id = (Auth.payload as AuthPayload).id;
+    //             if (!user_id) {
+    //                 set.status = 401; // Unauthorized
+    //                 throw new Error("Invalid authentication payload: user_id not found");
+    //             }
+
+    //             const movieData = { ...body, user_id };
+
+    //             const newMovie = await MovieService.createNewMovie(movieData);
+    //             return newMovie;
+    //         } catch (error) {
+    //             set.status = 400; // Bad Request
+    //             throw new Error(error instanceof Error ? error.message : "Failed to create movie");
+    //         }
+    //     },
+    //     {
+    //         body: moviePostSchema,
+    //         response: movieSchema,
+    //         detail: { summary: "Create a new movie" },
+    //         isSignIn: true
+    //     }
+    // )
 
     .get('/get', async () => {
         return await MovieService.get();
@@ -60,6 +94,7 @@ export const MovieController = new Elysia({
             message: t.String(),
             movie: movieSchema
         })
+
     })
 
     .delete("/delete/:id", async ({ params, set }) => {
@@ -80,7 +115,9 @@ export const MovieController = new Elysia({
         }
     }, {
         detail: { summary: "Delete a movie by ID" },
-        params: t.Object({ id: t.String() })
+        params: t.Object({ id: t.String() }),
+        isSignIn: true
+
     })
 
     .patch("/update/:id", async ({ params, body, set }) => {
@@ -101,7 +138,8 @@ export const MovieController = new Elysia({
         response: t.Object({
             message: t.String(),
             movie: movieSchema
-        })
+        }),
+        isSignIn: true
     })
 
 

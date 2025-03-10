@@ -39,15 +39,9 @@ export const AccountController = new Elysia({
         '/register',
         async ({ body, jwt, set }) => {
             try {
-<<<<<<< HEAD
-                const user = await AccountService.createNewUser(body);
-                const token = await jwt.sign({ id: user.id });
-                return { token, user };
-=======
                 const user = await AccountService.createNewUser(body)
                 const token = await jwt.sign({ id: user.username })
                 return { token, user }
->>>>>>> 03638837042ad631da5728c2be699c90dea8ed21
             } catch (error) {
                 set.status = "Bad Request"
                 if (error instanceof Error) throw new Error(error.message)
@@ -71,7 +65,6 @@ export const AccountController = new Elysia({
                 }
             },
         }
-<<<<<<< HEAD
     )
 
     .patch('/', async ({ body, set, Auth }) => {
@@ -91,6 +84,4 @@ export const AccountController = new Elysia({
         body: "updateProfile",
         isSignIn: true
     })
-=======
-    )
->>>>>>> 03638837042ad631da5728c2be699c90dea8ed21
+
