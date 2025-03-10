@@ -27,7 +27,7 @@ export const MovieController = new Elysia({
             body: moviePostSchema,
             response: movieSchema,
             detail: { summary: "Create a new movie" },
-            isSignIn: true
+
         }
     )
 
@@ -116,7 +116,6 @@ export const MovieController = new Elysia({
     }, {
         detail: { summary: "Delete a movie by ID" },
         params: t.Object({ id: t.String() }),
-        isSignIn: true
 
     })
 
@@ -139,7 +138,6 @@ export const MovieController = new Elysia({
             message: t.String(),
             movie: movieSchema
         }),
-        isSignIn: true
     })
 
 

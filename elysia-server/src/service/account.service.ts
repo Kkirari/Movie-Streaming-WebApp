@@ -5,6 +5,8 @@ import { user } from "../types/account.type";
 
 export const AccountService = {
 
+
+
     login: async function (loginData: login): Promise<user> {
         const user = await User.findOne({ username: loginData.username })
             .exec()

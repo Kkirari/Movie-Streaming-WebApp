@@ -26,7 +26,6 @@ export const TagsController = new Elysia({
             body: tagPostSchema,
             response: tagsSchema,
             detail: { summary: "Create a new Tags" },
-            isSignIn: true
         }
     )
     .get('/get', async () => {
@@ -47,7 +46,7 @@ export const TagsController = new Elysia({
     }, {
         detail: { summary: "Delete a Tags by ID" },
         params: t.Object({ id: t.String() })
-        , isSignIn: true
+
     })
 
     .patch("/update/:id", async ({ params, body, set }) => {
@@ -69,5 +68,4 @@ export const TagsController = new Elysia({
             message: t.String(),
             tags: tagsSchema
         }),
-        isSignIn: true
     })
