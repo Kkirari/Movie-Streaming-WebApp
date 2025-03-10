@@ -13,9 +13,8 @@ export const MovieController = new Elysia({
 
     .post(
         "/upload-movie",
-        async ({ body, set, Auth }) => {
+        async ({ body, set }) => {
             try {
-                const user_id = (Auth.payload as AuthPayload).id
                 const newMovie = await MovieService.createNewMovie(body);
                 return newMovie;
             } catch (error) {
@@ -31,37 +30,6 @@ export const MovieController = new Elysia({
         }
     )
 
-    // .post(
-    //     "/upload-movie",
-    //     async ({ body, set, Auth }) => {
-    //         try {
-    //             if (!Auth || !Auth.payload) {
-    //                 set.status = 401; // Unauthorized
-    //                 throw new Error("Authentication required");
-    //             }
-
-    //             const user_id = (Auth.payload as AuthPayload).id;
-    //             if (!user_id) {
-    //                 set.status = 401; // Unauthorized
-    //                 throw new Error("Invalid authentication payload: user_id not found");
-    //             }
-
-    //             const movieData = { ...body, user_id };
-
-    //             const newMovie = await MovieService.createNewMovie(movieData);
-    //             return newMovie;
-    //         } catch (error) {
-    //             set.status = 400; // Bad Request
-    //             throw new Error(error instanceof Error ? error.message : "Failed to create movie");
-    //         }
-    //     },
-    //     {
-    //         body: moviePostSchema,
-    //         response: movieSchema,
-    //         detail: { summary: "Create a new movie" },
-    //         isSignIn: true
-    //     }
-    // )
 
     .get('/get', async () => {
         return await MovieService.get();
